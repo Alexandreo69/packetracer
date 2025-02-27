@@ -1,0 +1,178 @@
+1. Acessando o Roteador
+	Ao conectar via console, Telnet ou SSH, você verá algo 	assim:
+
+Router>
+
+	O > indica que você está no modo usuário, que tem permissões 	limitadas.
+
+2. Entrando no Modo Privilegiado
+	Para acessar comandos mais avançados, use o comando enable:
+
+Router> enable
+Router#
+
+	O # indica que agora você está no modo privilegiado.
+
+3. Entrando no Modo de Configuração Global
+	Agora, para configurar o roteador, entre no modo de 	configuração global:
+
+Router# configure terminal
+Router(config)#
+
+	O (config)# indica que você está no modo de configuração 	global.
+
+4. Configurando o Nome do Roteador
+	Vamos mudar o nome do roteador:
+
+Router(config)# hostname MEU-ROTEADOR
+MEU-ROTEADOR(config)#
+	Agora, o nome do prompt mudou de Router para MEU-ROTEADOR.
+
+5. Configurando uma Interface
+	Vamos configurar o IP da interface GigabitEthernet 0/0:
+
+MEU-ROTEADOR(config)# interface GigabitEthernet 0/0
+MEU-ROTEADOR(config-if)#
+
+	Agora, o prompt mudou para (config-if), indicando que 	estamos configurando uma interface.
+
+	Agora, atribuimos um IP:
+
+MEU-ROTEADOR(config-if)# ip address 192.168.1.1 255.255.255.0
+MEU-ROTEADOR(config-if)# no shutdown
+	
+	A interface foi ativada.
+
+	Para sair desse modo e voltar para o modo global:
+
+MEU-ROTEADOR(config-if)# exit
+MEU-ROTEADOR(config)#
+
+6. Configurando Senha para Console
+	Saímos do modo de interface e agora configuramos a senha do 	console:
+
+MEU-ROTEADOR(config)# line console 0
+MEU-ROTEADOR(config-line)# password minhasenha
+MEU-ROTEADOR(config-line)# login
+MEU-ROTEADOR(config-line)# exit
+MEU-ROTEADOR(config)#
+
+7. Salvando Configurações
+	Para salvar as configurações feitas:
+
+MEU-ROTEADOR# copy running-config startup-config
+Destination filename [startup-config]? (pressione Enter)
+Building configuration...
+[OK]
+
+	Agora, mesmo que o roteador reinicie, as configurações serão 	mantidas.
+
+8. Verificando Configurações
+	Podemos checar as configurações ativas com:
+
+MEU-ROTEADOR# show running-config
+
+9. Reiniciando o Roteador
+	Para reiniciar o roteador:
+
+MEU-ROTEADOR# reload
+Proceed with reload? [confirm] (pressione Enter)
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Exemplo: 
+como seria a sequencia de comandos para mudar o IP da interface FastEthernet0/0 para 172.16.2.10 255.255.255.0?
+
+Router> enable
+Router#
+Router# configure terminal
+Router(config)#
+Router(config)# interface FastEthernet0/0
+Router(config-if)#
+Router(config-if)# ip address 172.16.2.10 255.255.255.0
+Router(config-if)# no shutdown
+%LINK-5-CHANGED: Interface FastEthernet0/0, changed state to up
+Router(config-if)# exit
+Router(config)#
+Router(config)# exit
+Router#
+Router# copy running-config startup-config
+Destination filename [startup-config]? (pressione Enter)
+Building configuration...
+[OK]
+
+Para verificar se a interface está com o novo IP, use:
+
+Router# show ip interface brief
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Para acessar um roteador Cisco via Telnet a partir de um PC, siga esta sequência de comandos.
+
+1️.Configurar o Roteador para Permitir Telnet
+Primeiro, o roteador precisa estar configurado para permitir conexões Telnet.
+
+Passo 1: Acessar o roteador via console
+Conecte-se ao roteador usando um cabo de console e entre no modo privilegiado:
+
+Router> enable
+Router#
+
+Passo 2: Configurar um endereço IP na interface do roteador
+Se o roteador ainda não tem um IP configurado, atribua um IP à interface conectada ao PC:
+
+Router# configure terminal
+Router(config)# interface FastEthernet0/0
+Router(config-if)# ip address 192.168.1.1 255.255.255.0
+Router(config-if)# no shutdown
+Router(config-if)# exit
+Router(config)#
+
+OBS: O PC precisa estar na mesma rede, por exemplo, com o IP 192.168.1.2.
+
+Passo 3: Habilitar Telnet e Definir Senha
+O Telnet exige que seja definida uma senha nas linhas VTY (Virtual Terminal Lines):
+
+Router(config)# line vty 0 4
+Router(config-line)# password 1234
+Router(config-line)# login
+Router(config-line)# exit
+Router(config)#
+
+Caso queira permitir o acesso remoto apenas via Telnet (e não SSH), desative SSH:
+
+Router(config)# transport input telnet
+
+Passo 4: Salvar as Configurações
+Para garantir que as configurações sejam mantidas após um reinício:
+
+Router# copy running-config startup-config
+Destination filename [startup-config]? (pressione Enter)
+Building configuration...
+[OK]
+
+2️. Conectar-se ao Roteador via Telnet no PC
+Agora, no PC, abra o Prompt de Comando (cmd) e digite:
+
+telnet 192.168.1.1
+Se a conexão for bem-sucedida, o roteador pedirá a senha:
+
+User Access Verification
+Password: 1234
+
+Digite a senha configurada e você terá acesso ao roteador via Telnet.
+
+3️.Comandos Após Conectar via Telnet
+Depois de conectado, o prompt será:
+
+Router>
+Agora você pode acessar o modo privilegiado:
+
+Router> enable
+Router#
+E realizar as configurações normalmente.
+
+4️.Encerrando a Sessão Telnet
+Para sair da conexão Telnet e voltar ao PC, use:
+
+Router# exit
+Ou pressione Ctrl + Shift + 6, solte e depois pressione X.
+
