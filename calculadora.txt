@@ -1,0 +1,42 @@
+def entrada():
+    x = float(input("Digite o valor :"))
+    return x
+    
+def somar(x,y):
+    print(f"A soma de {x} + {y} = {x+y}")
+    return x+y
+
+def subtrair(x,y):
+    print(f"A subtração de {x} - {y} = {x-y}")
+    return x-y  
+    
+def multiplicar(x,y):
+    print(f"A multiplicação de {x} * {y} = {x*y}")
+    return x*y
+
+def dividir(x,y):
+    print(f"A divisão de {x} / {y} = {x/y}")
+    return x/y    
+    
+op = False
+while op != "S":
+    print("* A - Entrada de A                       *")
+    print("* B - Entrada de B                       *")
+    print("* + - Soma de A + B                      *")
+    print("* - - Subtração de A - B                 *")
+    print("* * - Multiplicação de A * B             *")
+    print("* / - Divisão de A / B                   *")
+    print("* S - sair do programa                   *")
+    op = input("* Digite sua opção :")
+    if op == "A":
+        A = entrada()
+    elif op == "B":
+        B = entrada()
+    elif op == "+":
+        resp = somar(A,B)
+    elif op == "-":
+        resp = subtrair(A,B)
+    elif op == "*":
+        resp = multiplicar(A,B)
+    elif op == "/":
+        resp = dividir(A,B)
